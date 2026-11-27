@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIDO TAXI | Taxi Booking & Fare Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">R</div>
+        <div>
+          <h2>RIDO TAXI</h2>
+          <span>Your Ride, Your Comfort</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <p class="nav-label">MAIN MENU</p>
+        <a href="#dashboard" class="nav-link active" data-section="dashboard">▦ <span>Dashboard</span></a>
+        <a href="#drivers" class="nav-link" data-section="drivers">♙ <span>Drivers</span></a>
+        <a href="#vehicles" class="nav-link" data-section="vehicles">▣ <span>Vehicles</span></a>
+        <a href="#booking" class="nav-link" data-section="booking">＋ <span>Customer Booking</span></a>
+        <a href="#history" class="nav-link" data-section="history">◷ <span>Trip History</span></a>
+        <a href="#reports" class="nav-link" data-section="reports">▤ <span>Driver Reports</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-note">
+          <span class="status-dot"></span>
+          System Active
+        </div>
+        <p>RIDO TAXI MANAGEMENT</p>
+        <small>College Project</small>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+        <div>
+          <p class="topbar-small">WELCOME TO</p>
+          <h3>RIDO TAXI MANAGEMENT</h3>
+        </div>
+        <div class="topbar-right">
+          <span class="live-dot"></span>
+          <span>Admin Panel</span>
+        </div>
+      </header>
+
+      <!-- DASHBOARD -->
+      <section class="page-section active" id="dashboard">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">OVERVIEW</p>
+            <h1>Dashboard</h1>
+            <p class="subheading">Manage your taxi operations in one place.</p>
+          </div>
+          <a href="#booking" class="primary-btn" data-section="booking">＋ New Booking</a>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">♙</div>
+            <p>Total Drivers</p>
+            <h2 id="totalDrivers">0</h2>
+            <span>Registered drivers</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">▣</div>
+            <p>Total Vehicles</p>
+            <h2 id="totalVehicles">0</h2>
+            <span>Registered vehicles</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">▤</div>
+            <p>Total Bookings</p>
+            <h2 id="totalBookings">0</h2>
+            <span>All bookings</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">₹</div>
+            <p>Total Earnings</p>
+            <h2 id="totalEarnings">₹0</h2>
+            <span>Completed trips</span>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Recent Bookings</h2>
+                <p>Latest customer trips</p>
+              </div>
+              <a href="#history" data-section="history" class="text-link">View all →</a>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Booking ID</th>
+                    <th>Customer</th>
+                    <th>Route</th>
+                    <th>Fare</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recentBookings">
+                  <tr><td colspan="5" class="empty-cell">No bookings yet.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel quick-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Quick Overview</h2>
+                <p>Current availability</p>
+              </div>
+            </div>
+            <div class="quick-item">
+              <span>Available Drivers</span>
+              <strong id="availableDrivers">0</strong>
+            </div>
+            <div class="quick-item">
+              <span>Available Vehicles</span>
+              <strong id="availableVehicles">0</strong>
+            </div>
+            <div class="quick-item">
+              <span>Active Bookings</span>
+              <strong id="activeBookings">0</strong>
+            </div>
+            <div class="quick-item">
+              <span>Completed Trips</span>
+              <strong id="completedTrips">0</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DRIVERS -->
+      <section class="page-section" id="drivers">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">STAFF MANAGEMENT</p>
+            <h1>Driver Registration</h1>
+            <p class="subheading">Add and manage your taxi drivers.</p>
+          </div>
+        </div>
+
+        <div class="panel form-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Add New Driver</h2>
+              <p>Enter the driver's information below.</p>
+            </div>
+          </div>
+          <form id="driverForm" class="form-grid">
+            <div class="form-group">
+              <label for="driverName">Driver Name *</label>
+              <input id="driverName" type="text" placeholder="Enter driver name" required maxlength="50">
+            </div>
+            <div class="form-group">
+              <label for="driverPhone">Phone Number *</label>
+              <input id="driverPhone" type="tel" placeholder="10-digit mobile number" required pattern="[6-9][0-9]{9}" maxlength="10">
+            </div>
+            <div class="form-group">
+              <label for="driverLicense">Driving Licence Number *</label>
+              <input id="driverLicense" type="text" placeholder="Enter licence number" required maxlength="25">
+            </div>
+            <div class="form-group form-button">
+              <button type="submit" class="primary-btn">＋ Register Driver</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Driver List</h2>
+              <p>All registered drivers</p>
+            </div>
+            <span class="count-label" id="driverCount">0 Drivers</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Driver ID</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Licence Number</th>
+                  <th>Availability</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="driverTable">
+                <tr><td colspan="6" class="empty-cell">No drivers registered.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VEHICLES -->
+      <section class="page-section" id="vehicles">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">FLEET MANAGEMENT</p>
+            <h1>Vehicle Management</h1>
+            <p class="subheading">Register vehicles and manage kilometre rates.</p>
+          </div>
+        </div>
+
+        <div class="panel form-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Add New Vehicle</h2>
+              <p>Enter vehicle details and fare per kilometre.</p>
+            </div>
+          </div>
+          <form id="vehicleForm" class="form-grid">
+            <div class="form-group">
+              <label for="vehicleModel">Vehicle Model *</label>
+              <input id="vehicleModel" type="text" placeholder="Example: Swift Dzire" required maxlength="30">
+            </div>
+            <div class="form-group">
+              <label for="vehicleNumber">Vehicle Number *</label>
+              <input id="vehicleNumber" type="text" placeholder="Example: TN 37 AB 1234" required maxlength="20">
+            </div>
+            <div class="form-group">
+              <label for="vehicleCategory">Vehicle Category *</label>
+              <select id="vehicleCategory" required>
+                <option value="">Select category</option>
+                <option value="Hatchback">Hatchback</option>
+                <option value="Sedan">Sedan</option>
+                <option value="SUV">SUV</option>
+                <option value="Luxury">Luxury</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="vehicleRate">Rate per KM (₹) *</label>
+              <input id="vehicleRate" type="number" min="1" step="0.01" placeholder="Example: 15" required>
+            </div>
+            <div class="form-group form-button">
+              <button type="submit" class="primary-btn">＋ Add Vehicle</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Vehicle List</h2>
+              <p>All registered vehicles</p>
+            </div>
+            <span class="count-label" id="vehicleCount">0 Vehicles</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Vehicle ID</th>
+                  <th>Model</th>
+                  <th>Number</th>
+                  <th>Category</th>
+                  <th>Rate / KM</th>
+                  <th>Availability</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="vehicleTable">
+                <tr><td colspan="7" class="empty-cell">No vehicles registered.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- CUSTOMER BOOKING -->
+      <section class="page-section" id="booking">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">CUSTOMER SERVICE</p>
+            <h1>Customer Booking</h1>
+            <p class="subheading">Create a booking and calculate the road distance.</p>
+          </div>
+        </div>
+
+        <div class="booking-layout">
+          <div class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Customer Details</h2>
+                <p>Enter customer and trip information.</p>
+              </div>
+            </div>
+
+            <form id="bookingForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="customerName">Customer Name *</label>
+                  <input id="customerName" type="text" placeholder="Enter customer name" required maxlength="50">
+                </div>
+                <div class="form-group">
+                  <label for="customerPhone">Phone Number *</label>
+                  <input id="customerPhone" type="tel" placeholder="10-digit mobile number" required pattern="[6-9][0-9]{9}" maxlength="10">
+                </div>
+              </div>
+
+              <div class="section-divider"></div>
+              <h3 class="form-section-title">Trip Locations</h3>
+              <p class="helper-text">Enter any place in Tamil Nadu. Use a town, city, area or a well-known landmark.</p>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="fromLocation">Pickup Location *</label>
+                  <input id="fromLocation" type="text" placeholder="Example: Gandhipuram, Coimbatore" required maxlength="120">
+                </div>
+                <div class="form-group">
+                  <label for="toLocation">Destination *</label>
+                  <input id="toLocation" type="text" placeholder="Example: Thanjavur Bus Stand" required maxlength="120">
+                </div>
+              </div>
+
+              <button type="button" class="secondary-btn distance-btn" id="calculateDistanceBtn">
+                ↗ Calculate Road Distance
+              </button>
+
+              <div class="distance-result" id="distanceResult" aria-live="polite">
+                <div class="distance-icon">↔</div>
+                <div>
+                  <span>ROAD DISTANCE</span>
+                  <strong id="distanceDisplay">Not calculated</strong>
+                  <small id="routeMessage">Enter both locations and calculate distance.</small>
+                </div>
+              </div>
+              <p class="loading-text" id="distanceLoading" hidden>Finding locations and calculating route...</p>
+              <p class="map-credit">Distance provided by OpenStreetMap and OSRM routing services.</p>
+
+              <div class="section-divider"></div>
+              <h3 class="form-section-title">Vehicle & Fare Details</h3>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="bookingVehicle">Select Vehicle *</label>
+                  <select id="bookingVehicle" required>
+                    <option value="">Add a vehicle first</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="extraCharge">Additional Charges (₹)</label>
+                  <input id="extraCharge" type="number" min="0" step="0.01" value="0">
+                </div>
+              </div>
+
+              <div class="fare-preview">
+                <div>
+                  <span>Estimated Total Fare</span>
+                  <small id="fareBreakdown">Calculate the distance and select a vehicle.</small>
+                </div>
+                <strong id="fareDisplay">₹0.00</strong>
+              </div>
+
+              <button type="submit" class="primary-btn submit-booking-btn">Confirm Booking →</button>
+            </form>
+          </div>
+
+          <div class="panel allocation-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Trip Allocation</h2>
+                <p>Automatic driver allocation</p>
+              </div>
+            </div>
+            <div class="allocation-illustration">🚕</div>
+            <div class="allocation-info">
+              <span>DRIVER</span>
+              <strong>Automatically assigned</strong>
+              <p>The system assigns an available registered driver when the booking is confirmed.</p>
+            </div>
+            <div class="allocation-info">
+              <span>VEHICLE</span>
+              <strong>Selected by admin</strong>
+              <p>Choose an available vehicle from the booking form.</p>
+            </div>
+            <div class="allocation-warning" id="allocationNotice">
+              Register at least one driver and one vehicle before booking.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRIP HISTORY -->
+      <section class="page-section" id="history">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">TRIP MANAGEMENT</p>
+            <h1>Trip History</h1>
+            <p class="subheading">Track bookings, completed trips and cancellations.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>All Bookings</h2>
+              <p>Update the status of active bookings.</p>
+            </div>
+            <span class="count-label" id="bookingCount">0 Bookings</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Customer</th>
+                  <th>Route</th>
+                  <th>Distance</th>
+                  <th>Driver</th>
+                  <th>Vehicle</th>
+                  <th>Fare</th>
+                  <th>Status / Action</th>
+                </tr>
+              </thead>
+              <tbody id="historyTable">
+                <tr><td colspan="8" class="empty-cell">No trip history available.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- DRIVER REPORTS -->
+      <section class="page-section" id="reports">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">ANALYTICS</p>
+            <h1>Driver-wise Reports</h1>
+            <p class="subheading">View completed trips and earnings for each driver.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Driver Performance Summary</h2>
+              <p>Only completed trips are included in earnings.</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Driver ID</th>
+                  <th>Driver Name</th>
+                  <th>Total Trips</th>
+                  <th>Completed</th>
+                  <th>Cancelled</th>
+                  <th>Total Earnings</th>
+                </tr>
+              </thead>
+              <tbody id="reportTable">
+                <tr><td colspan="6" class="empty-cell">No driver reports available.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>© 2026 <strong>RIDO TAXI</strong> · Your Ride, Your Comfort</p>
+        <span>Taxi Booking & Fare Management System</span>
+      </footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,5 +1,4 @@
 
-"use strict";
 
 /* =========================================
    RIDO TAXI - TAXI BOOKING MANAGEMENT SYSTEM
